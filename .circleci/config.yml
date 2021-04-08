@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Run tests chrome
           command: | 
-              robot --outputdir reports --xunit xunit/output.xml --variablefile resources/variables.yaml tests/
+              robot --outputdir reports --xunit xunit/output.xml --variable browser:<< parameters.browser >> --variablefile resources/variables.yaml tests/
       - store_test_results:
           path: reports/xunit
       - store_artifacts:
