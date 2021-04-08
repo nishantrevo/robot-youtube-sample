@@ -1,21 +1,65 @@
 version: 2.1
 
 orbs:
-  python: circleci/python@0.2.1
+  python: circleci/python@1.3.4
+  browser-tools: circleci/browser-tools@1.1.0
 
 jobs:
-  build-and-test:
-    executor: python/default
+  build-test:
+    parameters:
+      browser:
+        default: "chrome"
+        type: string
+      driver:
+        default: "chromedriver"
+        type: string
+    docker:
+        - image: cimg/python:3.9.0-browsers
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
+      - python/install-packages:
+          pip-dependency-file: requirements.txt
+          pkg-manager: pip
+          cache-version: v2
+      - browser-tools/install-<< parameters.browser >>
+      - browser-tools/install-<< parameters.driver >>
       - run:
-          command: ./manage.py test
-          name: Test
+          name: Run tests chrome
+          command: | 
+              robot --outputdir reports --xunit xunit/output.xml --variable browser:<< parameters.browser >> --variablefile resources/variables.yaml tests/
+      - store_test_results:
+          path: reports/xunit
+      - store_artifacts:
+          path: reports
+          destination:  reports
+  # build-test:
+  #   docker:
+  #       - image: cimg/python:3.9.0-browsers
+  #   steps:
+  #     - checkout
+  #     - python/install-packages:
+  #         pip-dependency-file: requirements.txt
+  #         pkg-manager: pip
+  #         cache-version: v2
+  #     - browser-tools/install-chrome
+  #     - browser-tools/install-chromedriver
+  #     - run:
+  #         name: Run tests chrome
+  #         command: | 
+  #             robot --outputdir reports --xunit xunit/output.xml --variablefile resources/variables.yaml tests/
+  #     - store_test_results:
+  #         path: reports/xunit
+  #     - store_artifacts:
+  #         path: reports
+  #         destination:  reports
 
 workflows:
   main:
     jobs:
-      - build-and-test
+      - build-test:
+          name: test-chrome
+      - build-test:
+          name: test-firefox
+          browser: firefox
+          driver: geckodriver
+
