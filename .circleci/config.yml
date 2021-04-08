@@ -10,7 +10,10 @@ jobs:
         - image: cimg/python:3.9.0-browsers
     steps:
       - checkout
-      - python/install-packages
+      - python/install-packages:
+          pip-dependency-file: requirements.txt
+          pkg-manager: pip
+          cache-version: v2
       - browser-tools/install-chrome
       - run:
           name: Run tests chrome
