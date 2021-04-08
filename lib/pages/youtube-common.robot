@@ -8,7 +8,7 @@ Open youtube page
 		open browser		url=${url}		browser=${browser}
 		Give consent if needed
 		wait until location contains		${url}		timeout=20
-		Say no to sign-in pop up
+		Say no to sign-in pop up if present
 Give consent if needed
 		${redirectToConsent}=		run keyword and return status		wait until location contains		${consentDomain}		timeout=10
 		run keyword if		${redirectToConsent}		Give consent
@@ -16,7 +16,9 @@ Give consent
 		wait until location contains		${consentDomain}		timeout=20
 		wait until element is present and visible		${iAgreeButtonSelector}		20
 		click button		${iAgreeButtonSelector}
-
+Say no to sign-in pop up if present
+		${signInPopup}=		run keyword and return status		wait until element is present and visible		${noThanksButtonSelector}		5
+		run keyword if		${signInPopup}		Say no to sign-in pop up
 Say no to sign-in pop up
 		wait until element is present and visible		${noThanksButtonSelector}		20
 		click element		${noThanksButtonSelector}
