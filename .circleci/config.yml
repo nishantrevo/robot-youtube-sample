@@ -6,6 +6,13 @@ orbs:
 
 jobs:
   build-test:
+    parameters:
+      browser:
+        default: "chrome"
+        type: string
+      driver:
+        default: "chromedriver"
+        type: string
     docker:
         - image: cimg/python:3.9.0-browsers
     steps:
@@ -14,8 +21,8 @@ jobs:
           pip-dependency-file: requirements.txt
           pkg-manager: pip
           cache-version: v2
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - browser-tools/install-<< parameters.browser >>
+      - browser-tools/install-<< parameters.driver >>
       - run:
           name: Run tests chrome
           command: | 
@@ -25,8 +32,34 @@ jobs:
       - store_artifacts:
           path: reports
           destination:  reports
+  # build-test:
+  #   docker:
+  #       - image: cimg/python:3.9.0-browsers
+  #   steps:
+  #     - checkout
+  #     - python/install-packages:
+  #         pip-dependency-file: requirements.txt
+  #         pkg-manager: pip
+  #         cache-version: v2
+  #     - browser-tools/install-chrome
+  #     - browser-tools/install-chromedriver
+  #     - run:
+  #         name: Run tests chrome
+  #         command: | 
+  #             robot --outputdir reports --xunit xunit/output.xml --variablefile resources/variables.yaml tests/
+  #     - store_test_results:
+  #         path: reports/xunit
+  #     - store_artifacts:
+  #         path: reports
+  #         destination:  reports
 
 workflows:
   main:
     jobs:
-      - build-test
+      - build-test:
+          name: test-chrome
+      - build-test:
+          name: test-firefox
+          browser: firefox
+          driver: geckodriver
+
