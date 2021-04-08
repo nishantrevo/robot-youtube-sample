@@ -7,7 +7,7 @@ orbs:
 jobs:
   build-test:
     docker:
-        - image: cimg/python:3.7.7-browsers
+        - image: cimg/python:3.9.0-browsers
     steps:
       - checkout
       - python/install-packages
