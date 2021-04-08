@@ -1,0 +1,5 @@
+robotframework==4.0
+robotframework-seleniumlibrary==5.1.3
+robotframework-pabot==1.11
+webdrivermanager==0.10.0
+PyYAML==5.4.1

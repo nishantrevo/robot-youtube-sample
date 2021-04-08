@@ -1,0 +1,23 @@
+browser:  chrome
+searchKeyword:  linus tech tip 6800xt
+youtubeUrl:   https://www.youtube.com
+consentDomain:    consent.youtube.com
+searchUrl:    youtube.com/results?search_query
+
+
+# Homepage / Common selectors
+iAgreeButtonSelector:   "css:form[action='https://consent.youtube.com/s'] button"
+noThanksButtonSelector:   "css:.ytd-popup-container #dismiss-button a"
+playerSelector:   "css:#movie_player"
+skipAdsTimerSelector:   "css:.ytp-ad-preview-slot"
+skipAdsButtonSelector:    "css:.ytp-ad-skip-button"
+
+# Search selectors
+searchInputSelector:    "css:input#search"
+searchButtonSelector:   "css:button#search-icon-legacy"
+searchResultTitleSelectorTemplate:    "xpath://a[@id='video-title'][{}]"
+
+# Video Page selectors
+videoTitleSelector:    "css:#info h1.title"
+shareButtonSelector:    "xpath://*[@id='top-level-buttons']/ytd-button-renderer[1]/a"
+shareLinkTextSelector:    "css:#share-url"
