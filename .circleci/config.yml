@@ -15,6 +15,7 @@ jobs:
           pkg-manager: pip
           cache-version: v2
       - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
       - run:
           name: Run tests chrome
           command: | 
