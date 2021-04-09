@@ -4,8 +4,8 @@ Resource		../common.robot
 
 *** Keywords ***
 Open youtube page
-		[Arguments]		${url}		${browser}
-		open browser		url=${url}		browser=${browser}
+		[Arguments]		${url}		${browser}		${grid_url}
+		open browser		url=${url}		browser=${browser}		remote_url=${grid_url}
 		Give consent if needed
 		wait until location contains		${url}		timeout=20
 		Say no to sign-in pop up if present

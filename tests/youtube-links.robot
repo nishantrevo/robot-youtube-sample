@@ -1,7 +1,7 @@
 *** Settings ***
 Documentation		Youtube link tests
 Resource		../lib/pages/youtube-keywords.robot
-Test Setup		open youtube page		${youtubeUrl}		${browser}
+Test Setup		open youtube page		${youtubeUrl}		${browser}		${grid_url}
 Test Teardown		Close current browser
 
 *** Test Cases ***
